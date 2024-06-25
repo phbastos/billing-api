@@ -79,15 +79,4 @@ public class RequestDataService implements DataService {
         setIfPresent(headers, MessageHeaders.CNPJ_EMITENTE.getHeader(), requestData::setCnpjEmitente);
         setIfPresent(body, requestData::setResponsePayload);
     }
-
-    private static <T> void setIfPresent(Map<String, Object> map, String key, Consumer<T> setter) {
-        Optional.ofNullable(map.get(key))
-                .ifPresent(value -> setter.accept((T) value));
-    }
-
-    private static <T> void setIfPresent(String content, Consumer<T> setter) {
-        if (StringUtils.isNotBlank(content)) {
-            setter.accept((T) content);
-        }
-    }
 }
