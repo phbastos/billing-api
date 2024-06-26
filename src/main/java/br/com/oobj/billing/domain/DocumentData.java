@@ -1,5 +1,6 @@
 package br.com.oobj.billing.domain;
 
+import br.com.oobj.billing.domain.enums.StatusProcessamento;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -66,6 +67,9 @@ public class DocumentData {
     @Field(RequestDocumentProperties.ERROR_MESSAGE)
     private String errorMessage;
 
+    @Field(RequestDocumentProperties.STATUS_PROCESSAMENTO)
+    private StatusProcessamento statusProcessamento;
+
     public static class RequestDocumentProperties {
         public static final String ID = "id";
         public static final String ID_REQUEST = "idRequest";
@@ -85,6 +89,7 @@ public class DocumentData {
         public static final String DURACAO_SAP_CONSULT_CONFIRM = "duracaoSAPConsultConfirm";
         public static final String HAS_ERROR = "hasError";
         public static final String ERROR_MESSAGE = "errorMessage";
+        public static final String STATUS_PROCESSAMENTO = "statusProcessamento";
     }
 
 }

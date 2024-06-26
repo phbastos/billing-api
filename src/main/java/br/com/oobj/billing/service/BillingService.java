@@ -36,12 +36,12 @@ public class BillingService {
     }
 
     public void newUpdateMessage(Message message) throws DataTypeNaoInformadoException, IdRequisicaoNaoInformadoException, DataNotFoundException {
-        Object dataTypeHeader = message.getMessageProperties().getHeaders().get(DATA_TYPE);
+        Object dataTypeHeader = message.getMessageProperties().getHeaders().get(DATA_TYPE.getHeader());
         if (dataTypeHeader == null) {
             throw new DataTypeNaoInformadoException("Tipo de dado não informado. Nao consigo prosseguir sem essa informacao");
         }
 
-        DataType dataType = DataType.fromCodigo((Integer) dataTypeHeader);
+        DataType dataType = DataType.fromCodigo(((Long) dataTypeHeader).intValue());
 
         switch (dataType) {
             case REQUEST -> requestDataService.processUpdateData(message);

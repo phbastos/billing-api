@@ -36,7 +36,8 @@ public enum MessageHeaders {
     DATA_HORA_ENVIO_ENGINES("data_hora_envio_engines"),
     DATA_HORA_RETORNO_ENGINES("data_hora_retorno_engines"),
     DATA_HORA_CONSULTA_SAP("data_hora_consulta_sap"),
-    DATA_HORA_CONFIRMACAO_SAP("data_hora_confirmacao_sap");
+    DATA_HORA_CONFIRMACAO_SAP("data_hora_confirmacao_sap"),
+    STATUS_PROCESSAMENTO("status_processamento");
 
 
     private final String header;

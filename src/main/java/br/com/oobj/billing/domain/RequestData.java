@@ -17,55 +17,58 @@ import java.time.LocalDateTime;
 public class RequestData {
 
     @Id
-    @Field(RequestBillingProperties.ID)
+    @Field(RequestDataProperties.ID)
     @Indexed(name = "idx_id")
     private String id;
 
-    @Field(RequestBillingProperties.TIPO_REQUEST)
+    @Field(RequestDataProperties.TIPO_REQUEST)
     private TipoRequest tipoRequest;
 
-    @Field(RequestBillingProperties.STATUS_CODE)
+    @Field(RequestDataProperties.STATUS_CODE)
     @Indexed(name = "idx_statusCode")
-    private String statusCode;
+    private Long statusCode;
 
-    @Field(RequestBillingProperties.DATA_HORA_REQUEST)
+    @Field(RequestDataProperties.DATA_HORA_REQUEST)
     @Indexed(name = "idx_dataHoraRequest")
     private String dataHoraRequest;
 
-    @Field(RequestBillingProperties.HAS_ERROR)
+    @Field(RequestDataProperties.HAS_ERROR)
     @Indexed(name = "idx_hasError")
     private Boolean hasError;
 
-    @Field(RequestBillingProperties.ERROR_MESSAGE)
+    @Field(RequestDataProperties.ERROR_MESSAGE)
     private String errorMessage;
 
-    @Field(RequestBillingProperties.TIPO_AMBIENTE)
+    @Field(RequestDataProperties.TIPO_AMBIENTE)
     @Indexed(name = "idx_tipoAmbiente")
     private TipoAmbiente tipoAmbiente;
 
-    @Field(RequestBillingProperties.CNPJ_EMITENTE)
+    @Field(RequestDataProperties.CNPJ_EMITENTE)
     @Indexed(name = "idx_cnpjEmitente")
     private String cnpjEmitente;
 
-    @Field(RequestBillingProperties.QUANTIDADE_DOCUMENTOS)
+    @Field(RequestDataProperties.QUANTIDADE_DOCUMENTOS)
     private Long quantidadeDocumentos;
 
-    @Field(RequestBillingProperties.IP_ADDRESS)
+    @Field(RequestDataProperties.IP_ADDRESS)
     private String ipAddress;
 
-    @Field(RequestData.RequestBillingProperties.DATA_HORA_RESPONSE)
+    @Field(RequestDataProperties.DATA_HORA_RESPONSE)
     private String dataHoraResponse;
 
-    @Field(RequestBillingProperties.DATA_HORA_EXPIRE)
+    @Field(RequestDataProperties.DATA_HORA_EXPIRE)
     private LocalDateTime dataHoraExpire; //TODO esse campo nao deveria existir
 
-    @Field(RequestBillingProperties.REQUEST_PAYLOAD)
+    @Field(RequestDataProperties.REQUEST_PAYLOAD)
     private String requestPayload;
 
-    @Field(RequestBillingProperties.RESPONSE_PAYLOAD)
+    @Field(RequestDataProperties.RESPONSE_PAYLOAD)
     private String responsePayload;
 
-    public static class RequestBillingProperties {
+    @Field(RequestDataProperties.UPDATED_AT)
+    private String updatedAt;
+
+    public static class RequestDataProperties {
         public static final String ID = "id";
         public static final String TIPO_REQUEST = "tipoRequest";
         public static final String STATUS_CODE = "statusCode";
@@ -80,6 +83,7 @@ public class RequestData {
         public static final String DATA_HORA_EXPIRE = "dataHoraExpire";
         public static final String REQUEST_PAYLOAD = "requestPayload";
         public static final String RESPONSE_PAYLOAD = "responsePayload";
+        public static final String UPDATED_AT = "updatedAt";
 
     }
 

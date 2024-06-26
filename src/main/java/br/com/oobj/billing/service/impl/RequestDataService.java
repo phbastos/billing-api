@@ -14,6 +14,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -39,7 +40,7 @@ public class RequestDataService implements DataService {
     public void processUpdateData(Message message) throws IdRequisicaoNaoInformadoException, DataNotFoundException {
         Map<String, Object> headers = message.getMessageProperties().getHeaders();
         String idRequest = (String) headers.get(MessageHeaders.ID_REQUISICAO.getHeader());
-        if (StringUtils.isEmpty(idRequest.trim())) {
+        if (StringUtils.isEmpty(idRequest)) {
             throw new IdRequisicaoNaoInformadoException("ID da requisição não informado. Não é possível prosseguir sem essa informação.");
         }
 
@@ -53,10 +54,12 @@ public class RequestDataService implements DataService {
 
         updateRequestData(requestData, headers, new String(message.getBody(), StandardCharsets.UTF_8));
 
+        repository.save(requestData);
     }
 
     private RequestData createRequestData(Map<String, Object> headers, String body) {
         return RequestData.builder()
+                .id((String) headers.get(MessageHeaders.ID_REQUISICAO.getHeader()))
                 .tipoRequest(TipoRequest.fromCodigo((Long) headers.get(MessageHeaders.TIPO_REQUISICAO.getHeader())))
                 .dataHoraRequest(Optional.ofNullable(headers.get(MessageHeaders.DATA_HORA_REQUEST.getHeader()))
                         .map(Object::toString).orElse(STRING_VAZIA))
@@ -67,6 +70,7 @@ public class RequestDataService implements DataService {
                 .requestPayload(body)
                 .cnpjEmitente(Optional.ofNullable(headers.get(MessageHeaders.CNPJ_EMITENTE.getHeader()))
                         .map(Object::toString).orElse(STRING_VAZIA))
+                .updatedAt(LocalDateTime.now().toString())
                 .build();
     }
 
@@ -78,5 +82,7 @@ public class RequestDataService implements DataService {
         setIfPresent(headers, MessageHeaders.DATA_HORA_RESPONSE.getHeader(), requestData::setDataHoraResponse);
         setIfPresent(headers, MessageHeaders.CNPJ_EMITENTE.getHeader(), requestData::setCnpjEmitente);
         setIfPresent(body, requestData::setResponsePayload);
+
+        requestData.setUpdatedAt(LocalDateTime.now().toString());
     }
 }
